@@ -1,0 +1,23 @@
+# Path to Chrome user data base directory
+$baseProfileDir = "C:\Users\WhatUpTime.com\AppData\Local\Google\Chrome\User Data"
+
+# Path to the source profile (Profile 1)
+$sourceProfileDir = "$baseProfileDir\Profile 1"
+
+# Ensure the source profile exists
+if (-Not (Test-Path -Path $sourceProfileDir)) {
+    Write-Host "Source profile directory does not exist: $sourceProfileDir"
+    exit
+}
+
+# Copy Profile 1 to Profile 2 to Profile 20
+for ($i = 2; $i -le 20; $i++) {
+    $destinationProfileDir = "$baseProfileDir\Profile $i"
+    if (Test-Path -Path $destinationProfileDir) {
+        Remove-Item -Recurse -Force -Path $destinationProfileDir
+    }
+    Copy-Item -Recurse -Path $sourceProfileDir -Destination $destinationProfileDir
+    Write-Host "Copied Profile 1 to Profile $i"
+}
+
+Write-Host "All profiles have been copied successfully."
