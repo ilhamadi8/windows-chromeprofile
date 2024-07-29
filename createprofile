@@ -1,0 +1,14 @@
+# Path to Chrome executable
+$chromePath = "C:\Program Files\Google\Chrome\Application\chrome.exe"
+
+# Base directory for Chrome user data
+$baseProfileDir = "C:\Users\WhatUpTime.com\AppData\Local\Google\Chrome\User Data"
+
+# Create 20 profiles
+for ($i = 1; $i -le 20; $i++) {
+    $profileDir = "$baseProfileDir\Profile $i"
+    if (-Not (Test-Path -Path $profileDir)) {
+        New-Item -ItemType Directory -Path $profileDir
+        Start-Process -FilePath $chromePath -ArgumentList "--user-data-dir=$profileDir"
+    }
+}
