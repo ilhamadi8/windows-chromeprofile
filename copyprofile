@@ -10,14 +10,17 @@ if (-Not (Test-Path -Path $sourceProfileDir)) {
     exit
 }
 
-# Copy Profile 1 to Profile 2 to Profile 20
+# Copy Profile 1 to Profile 2 through Profile 20
 for ($i = 2; $i -le 20; $i++) {
     $destinationProfileDir = "$baseProfileDir\Profile $i"
     if (Test-Path -Path $destinationProfileDir) {
+        # Remove the existing profile directory
         Remove-Item -Recurse -Force -Path $destinationProfileDir
     }
+    # Copy Profile 1 to the destination profile directory
     Copy-Item -Recurse -Path $sourceProfileDir -Destination $destinationProfileDir
     Write-Host "Copied Profile 1 to Profile $i"
 }
 
 Write-Host "All profiles have been copied successfully."
+
