@@ -1,0 +1,26 @@
+# Path to Chrome executable
+$chromePath = "C:\Program Files\Google\Chrome\Application\chrome.exe"
+
+# Base directory for Chrome user data
+$userProfileBaseDir = "C:\Users\WhatUpTime.com\AppData\Local\Google\Chrome\User Data"
+
+# Desktop directory
+$desktopDir = [System.IO.Path]::Combine([System.Environment]::GetFolderPath("Desktop"))
+
+# Create shortcuts for 20 profiles
+for ($i = 1; $i -le 20; $i++) {
+    $profileDir = "$userProfileBaseDir\Profile $i"
+    $shortcutPath = [System.IO.Path]::Combine($desktopDir, "Chrome Profile $i.lnk")
+
+    # Create the shortcut
+    $wshShell = New-Object -ComObject WScript.Shell
+    $shortcut = $wshShell.CreateShortcut($shortcutPath)
+    $shortcut.TargetPath = $chromePath
+    $shortcut.Arguments = "--user-data-dir=`"$profileDir`""
+    $shortcut.IconLocation = "$chromePath, 0"
+    $shortcut.Save()
+
+    Write-Host "Shortcut created for Chrome Profile $i on the desktop."
+}
+
+Write-Host "All shortcuts have been created successfully."
